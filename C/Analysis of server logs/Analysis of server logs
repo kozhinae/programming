@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <stdint.h>
+
+int time[1891715];
+
+int main() {
+    FILE *file = NULL;
+    file = fopen("access_log_Jul95.txt", "r");
+    char data[600];
+    uint64_t count_mistake = 0, count = 0;
+    while (!feof(file)) {
+        if (fgets(data, 600, file)) {
+            for (int i = 0; data[i] != '\0'; i++) {
+                if (data[i] == '[') {
+                    char day[3], hour[3], min[3], sec[3];
+                    day[0] = data[i + 1];
+                    day[1] = data[i + 2];
+                    int day1 = (day[0] - '0') * 10 + (day[1] - '0');
+                    hour[0] = data[i + 13];
+                    hour[1] = data[i + 14];
+                    int hour1 = (hour[0] - '0') * 10 + (hour[1] - '0');
+                    min[0] = data[i + 16];
+                    min[1] = data[i + 17];
+                    int min1 = (min[0] - '0') * 10 + (min[1] - '0');
+                    sec[0] = data[i + 19];
+                    sec[1] = data[i + 20];
+                    int sec1 = (sec[0] - '0') * 10 + (sec[1] - '0');
+                    time[count] = (day1 - 1) * 86400 + hour1 * 3600 + min1 * 60 + sec1;
+                } else if (data[i] == '"' && data[i + 1] == ' ' && data[i + 2] == '5') {
+                    printf("%s", data);
+                    count_mistake++;
+                }
+            }
+        }
+        count++;
+    }
+    printf("%llu", count_mistake);
+    fclose(file);
+    uint64_t seconds = 0;
+    scanf("%llu", &seconds);
+    int max_request = 0;
+    for (int i = 0; i < 1891715; i++) {
+        int j;
+        for (j = i + 1; j < 1891715 && time[j] - time[i] <= seconds; j++);
+        if (j - i > max_request) {
+            max_request = j - i;
+        }
+    }
+    printf("%d", max_request);
+    return 0;
+}
