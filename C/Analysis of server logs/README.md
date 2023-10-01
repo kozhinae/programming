@@ -8,7 +8,7 @@ This is a text file, each line of which has the following format:
 3. $local_time - time of the source.
 4. $request - the source.
 5. $status - response status.
-6. $bytes_send - the number of bytes transmitted in the response.
+6. $bytes_send - the number of bytes transmitted in the response.  
 For example, 198.112.92.15 - - [03/Jul/1995:10:50:02 -0400] "GET /shuttle/countdown/
 HTTP/1.0" 200 3985.
 - Prepared a list of queries that ended in a 5xx error, with the
