@@ -17,7 +17,7 @@ for k in range(1, n):
             C[k][l]=B[l][0]
         else:
             z=100000000000000000
-            #варианты чтобы найти мин
+            #options to find the minimum
             for p in range(k-1, l):
                 z=min(C[k-1][p]+B[l][p], z)
             C[k][l]=z
